@@ -86,11 +86,6 @@ Após subir os containers, acesse `http://localhost:8080` e configure:
 3. Crie as roles: `admin`, `user`
 4. Crie um usuário, defina a senha (desative Temporary) e atribua uma role
 
----
-
-- **Admin:** acesso completo ao sistema (CRUD e dashboard)
-- **User:** acesso restrito (visualização)
-
 ## 📁 Estrutura do projeto
 
 ```
