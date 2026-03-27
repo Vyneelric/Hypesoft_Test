@@ -10,8 +10,10 @@ services:
       MONGO_INITDB_DATABASE: HypersoftDB
     volumes:
       - mongodb_data:/data/db
+      - ./mongo-seed/seed.js:/docker-entrypoint-initdb.d/seed.js:ro
     networks:
       - hypersoft-network
+
 
   mongo-express:
     image: mongo-express:latest
