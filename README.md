@@ -30,7 +30,13 @@ git clone https://github.com/Vyneelric/Hypesoft_Test.git
 cd Hypesoft_Test
 ```
 
-### 2. Suba os containers com Docker
+### 2. Copie as variáveis de ambiente
+
+```bash
+cp Front-End_Hypesoft/.env.example Front-End_Hypesoft/.env
+```
+
+### 3. Suba os containers com Docker
 
 ```bash
 cd Back-end_Hypesoft
