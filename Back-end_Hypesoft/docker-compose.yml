@@ -74,13 +74,13 @@ services:
     build:
       context: ../Front-End_Hypesoft
       dockerfile: Dockerfile
+      args:
+        VITE_KEYCLOAK_URL: http://localhost:8080
+        VITE_KEYCLOAK_REALM: hypesoft
+        VITE_KEYCLOAK_CLIENT_ID: hypesoft-frontend
     container_name: hypersoft-frontend
     ports:
       - "3000:3000"
-    environment:
-      VITE_KEYCLOAK_URL: http://localhost:8080
-      VITE_KEYCLOAK_REALM: hypesoft
-      VITE_KEYCLOAK_CLIENT_ID: hypesoft-frontend
     depends_on:
       - nginx
     networks:
