@@ -30,13 +30,7 @@ git clone https://github.com/Vyneelric/Hypesoft_Test.git
 cd Hypesoft_Test
 ```
 
-### 2. Copie as variáveis de ambiente
-
-```bash
-cp Front-End_Hypesoft/.env.example Front-End_Hypesoft/.env
-```
-
-### 3. Suba os containers com Docker
+### 2. Suba os containers com Docker
 
 ```bash
 cd Back-end_Hypesoft
@@ -55,12 +49,12 @@ Esse comando irá subir automaticamente:
 
 Após subir o projeto, acesse:
 
-| Serviço | URL |
-|---|---|
-| Frontend | http://localhost:3000 |
-| API (Swagger) | http://localhost:5000/swagger/index.html |
-| Mongo Express | http://localhost:8081 |
-| Keycloak | http://localhost:8080 |
+| Serviço | URL | Usuário | Senha |
+|---|---|---|---|
+| Frontend | http://localhost:3000 | `admin` | `test` |
+| API (Swagger) | http://localhost:5000/swagger/index.html | - | - |
+| Mongo Express | http://localhost:8081 | - | - |
+| Keycloak (painel admin) | http://localhost:8080 | `admin` | `admin` |
 
 ## 🔐 Autenticação
 
@@ -77,14 +71,22 @@ O sistema utiliza o Keycloak para autenticação e autorização via OpenID Conn
 
 ### ⚙️ Configuração do Keycloak
 
-Após subir os containers, acesse `http://localhost:8080` e configure:
+O realm do Keycloak é **importado automaticamente** na inicialização dos containers via `keycloak/realm-export.json`. Nenhuma configuração manual é necessária.
 
-1. Crie o realm: `hypesoft`
-2. Crie o client: `hypesoft-frontend` (OpenID Connect, público)
-   - Valid redirect URIs: `http://localhost:3000/*`
-   - Web origins: `+`
-3. Crie as roles: `admin`, `user`
-4. Crie um usuário, defina a senha (desative Temporary) e atribua uma role
+O seguinte já vem pré-configurado:
+
+- **Realm:** `hypesoft`
+- **Client:** `hypesoft-frontend` (OpenID Connect, público)
+  - Valid redirect URIs: `http://localhost:3000/*`
+  - Web origins: `+`
+- **Roles:** `Admin`, `User`
+
+### 👤 Acesso ao sistema
+
+Use as credenciais abaixo para acessar o frontend:
+
+- Usuário: `admin`
+- Senha: `test`
 
 ## 📁 Estrutura do projeto
 
@@ -106,6 +108,8 @@ Hypesoft_Test/
 │   ├── Hypersoft.Infrastructure/
 │   │   ├── Data/
 │   │   └── Repositories/
+│   ├── keycloack/
+│   │   └── realm.export.json
 │   ├── nginx/
 │   │   └── nginx.conf
 │   ├── docker-compose.yml
@@ -187,7 +191,12 @@ A validação da aplicação foi feita através de:
 
 ### 🔸 Keycloak não carregou o realm
 
-Verifique se você está no realm correto (não no `master`). O realm deve ser `hypesoft`. Caso necessário, reconfigure manualmente em `http://localhost:8080`.
+O realm é importado automaticamente no primeiro startup via `--import-realm`. Caso não tenha carregado, recrie o container:
+
+```bash
+docker rm -f hypersoft-keycloak
+docker-compose up -d keycloak
+```
 
 > ⚠️ Não use `docker-compose down -v` pois isso apaga os volumes e você perderá os dados do banco.
 
